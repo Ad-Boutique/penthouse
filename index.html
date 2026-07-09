@@ -393,8 +393,20 @@ a { color: inherit; text-decoration: none; }
   margin: 64px 0 0;
   white-space: nowrap;
 }
+.site-footer .nav-monogram { display: flex; align-items: baseline; gap: 12px; font-family: var(--font-display); }
+.site-footer .nav-monogram .mark { font-size: 24px; }
 @media (max-width: 880px) {
-  .site-footer .ft-top { grid-template-columns: 1fr 1fr; gap: 40px; padding-bottom: 56px; }
+  .site-footer .ft-top { grid-template-columns: 1fr 1fr; gap: 44px 28px; padding-bottom: 56px; }
+  .site-footer .ft-top > div:first-child { grid-column: 1 / -1; }
+}
+@media (max-width: 760px) {
+  .site-footer { padding-top: 72px; }
+  .site-footer h4 { font-size: 21px; margin-bottom: 12px; }
+  .site-footer ul { gap: 8px; }
+  .site-footer .ft-bottom { flex-direction: column; align-items: flex-start; gap: 10px; padding-top: 28px; }
+  .site-footer .ft-bottom span { letter-spacing: 0.1em; line-height: 1.6; }
+  .site-footer .ft-bottom .ft-sep { display: block; height: 0; overflow: hidden; }
+  .site-footer .ft-mega { margin-top: 44px; }
 }
 
 /* Scroll reveal primitives */
@@ -695,7 +707,7 @@ body.scheme-graphite {
 .p-mat-name { font-family: var(--font-display); font-weight: 300; font-size: 26px; line-height: 1.1; letter-spacing: -0.01em; margin-top: auto; }
 .p-mat-spec { font-size: 13px; color: var(--text-muted); letter-spacing: 0.02em; }
 @media (max-width: 880px) { .p-mat-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .p-mat:nth-child(3n) { border-right: 1px solid var(--line); } .p-mat:nth-child(2n) { border-right: 0; } }
-@media (max-width: 540px) { .p-mat-grid { grid-template-columns: 1fr; } .p-mat { border-right: 0 !important; } }
+/* unter 760px wird das Materialien-Grid zum horizontalen Scroller (siehe Mobile-Scroller-Block) */
 
 /* ============================ HIGHLIGHTS ============================ */
 .p-hl-row { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: center; padding: clamp(48px, 7vw, 100px) 0; border-top: 1px solid var(--line); }
@@ -908,12 +920,23 @@ body.scheme-graphite {
 .l-tt-val.l-tt-best { color: var(--court-green); position: relative; }
 .l-tt-val.l-tt-best::before { content: ""; position: absolute; left: -10px; top: 50%; transform: translateY(-50%); width: 4px; height: 4px; border-radius: 50%; background: var(--court-brass); }
 .l-tt-val.l-tt-dim { color: rgba(27,29,25,0.35); }
+/* Mobil wird jede Zeile zur Karte: Ziel als Titel, darunter die vier Werte mit eigenem Label */
 @media (max-width: 720px) {
-  .l-tt-head, .l-tt-row { grid-template-columns: 1.4fr repeat(4, 0.7fr); gap: 12px; padding: 16px 0; }
-  .l-tt-name { font-size: 16px; }
-  .l-tt-val { font-size: 18px; }
-  .l-tt-mode i { display: none; }
-  .l-tt-mode { font-size: 9px; }
+  .l-tt-head { display: none; }
+  .l-tt-row { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; padding: 16px 0 18px; }
+  .l-tt-name { grid-column: 1 / -1; font-size: 19px; }
+  .l-tt-val { text-align: left; font-size: 19px; }
+  .l-tt-row .l-tt-val::before {
+    content: ""; display: block; position: static;
+    width: auto; height: auto; border-radius: 0; background: none; transform: none;
+    font-family: var(--font-ui); font-weight: 400; font-size: 9px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted);
+    margin-bottom: 5px;
+  }
+  .l-tt-row .l-tt-val:nth-child(2)::before { content: "zu Fuß"; }
+  .l-tt-row .l-tt-val:nth-child(3)::before { content: "Rad"; }
+  .l-tt-row .l-tt-val:nth-child(4)::before { content: "ÖPNV"; }
+  .l-tt-row .l-tt-val:nth-child(5)::before { content: "Auto"; }
 }
 
 /* ============================ MOBILE MENU DRAWER ============================ */
@@ -929,6 +952,82 @@ body.nav-open .mobile-menu { transform: none; visibility: visible; }
 .mobile-menu .mm-foot { display: flex; gap: 24px; margin-top: 28px; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-on-dark-muted); flex-wrap: wrap; }
 @media (max-width: 880px) { .menu-toggle { display: inline-flex !important; } }
 @media (min-width: 881px) { .menu-toggle { display: none; } }
+
+/* ============================ FREIRAUM / GESTALTUNG ============================ */
+.p-freiraum .eyebrow { color: var(--text-on-dark-muted); }
+.p-fr-head { max-width: 860px; margin-bottom: clamp(44px, 6vw, 72px); }
+.p-fr-lede { color: var(--text-on-dark-muted); font-size: var(--t-body-lg); line-height: 1.7; margin-top: 24px; max-width: 58ch; }
+/* Szenarien als editoriale Zeilen (bewusst anderes Raster als die Unit-Cards im Finder) */
+.p-fr-body { display: grid; grid-template-columns: 1fr 280px; gap: clamp(48px, 6vw, 96px); align-items: start; }
+.p-fr-visual { position: sticky; top: 110px; }
+.p-fr-svg { display: block; width: 100%; height: auto; }
+.p-fr-svg .fr-fill { fill: rgba(247,244,236,0.05); transition: fill .8s var(--ease); }
+.p-fr-svg .fr-upper, .p-fr-svg .fr-lower, .p-fr-svg .fr-orangerie { transition: opacity .8s var(--ease); }
+.p-fr-svg .fr-divider { stroke: #F2EFE6; stroke-dasharray: 4 4; opacity: 0; transition: opacity .8s var(--ease); }
+.p-fr-svg .fr-lbl { fill: rgba(247,244,236,0.8); font-family: var(--font-ui); font-size: 9px; letter-spacing: 0.08em; opacity: 0; transition: opacity .8s var(--ease); }
+.p-fr-visual[data-state="2"] .fr-divider, .p-fr-visual[data-state="3"] .fr-divider { opacity: 0.9; }
+.p-fr-visual[data-state="2"] .fr-lbl, .p-fr-visual[data-state="3"] .fr-lbl { opacity: 1; }
+.p-fr-visual[data-state="2"] .fr-upper .fr-fill { fill: rgba(242,239,230,0.16); }
+.p-fr-visual[data-state="2"] .fr-lower .fr-fill { fill: rgba(247,244,236,0.09); }
+.p-fr-visual[data-state="3"] .fr-upper { opacity: 0.4; }
+.p-fr-visual[data-state="3"] .fr-lower .fr-fill, .p-fr-visual[data-state="3"] .fr-orangerie .fr-fill { fill: rgba(242,239,230,0.16); }
+.p-fr-caps { position: relative; margin-top: 14px; height: 20px; }
+.p-fr-caps span { position: absolute; inset: 0; opacity: 0; transition: opacity .6s var(--ease); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-on-dark-muted); text-align: center; }
+.p-fr-caps span.is-on { opacity: 1; }
+.p-fr-list { border-top: 1px solid var(--line-on-dark); }
+.p-fr-row { display: grid; grid-template-columns: 64px 1fr auto; gap: 28px; align-items: start; padding: clamp(28px, 4vw, 44px) 0; border-bottom: 1px solid var(--line-on-dark); }
+.p-fr-num { font-family: var(--font-display); font-weight: 300; font-size: 22px; color: var(--court-brass-soft); opacity: 0.55; letter-spacing: 0.02em; transition: opacity .5s var(--ease); }
+.p-fr-row.is-active .p-fr-num { opacity: 1; }
+.p-fr-tag { transition: border-color .5s var(--ease); }
+.p-fr-row.is-active .p-fr-tag { border-color: rgba(247,244,236,0.55); }
+.p-fr-row h3 { font-family: var(--font-display); font-weight: 300; font-size: clamp(26px, 3vw, 40px); line-height: 1.08; letter-spacing: -0.015em; margin: 0; }
+.p-fr-row p { color: var(--text-on-dark-muted); font-size: var(--t-body-lg); line-height: 1.66; margin: 12px 0 0; max-width: 58ch; }
+.p-fr-tag { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--court-offwhite); border: 1px solid var(--line-on-dark); padding: 7px 13px; white-space: nowrap; margin-top: 10px; }
+.p-fr-cta { display: flex; align-items: center; gap: 26px; flex-wrap: wrap; margin-top: clamp(36px, 5vw, 56px); }
+.p-fr-cta .meta { color: var(--text-on-dark-muted); max-width: 46ch; }
+@media (max-width: 880px) {
+  .p-fr-body { grid-template-columns: 1fr; gap: 12px; }
+  .p-fr-visual { position: static; order: -1; width: min(62vw, 230px); margin: 0 auto 20px; }
+}
+@media (max-width: 760px) {
+  .p-fr-row { grid-template-columns: 1fr; gap: 8px; }
+  .p-fr-num { font-size: 18px; }
+  .p-fr-tag { justify-self: start; margin-top: 4px; }
+}
+
+/* ============================ MOBILE: HORIZONTALE SCROLLER ============================
+   Unter 760px werden lange Kartenstapel zu wischbaren Reihen mit Scroll-Snap.
+   Die angeschnittene Folgekarte dient als Wisch-Hinweis. */
+@media (max-width: 760px) {
+  .p-gal-grid, .p-hl-tiles, .p-mat-grid, .p-units {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: var(--pad-x);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-left: calc(-1 * var(--pad-x));
+    margin-right: calc(-1 * var(--pad-x));
+    padding-left: var(--pad-x);
+    padding-right: var(--pad-x);
+  }
+  .p-gal-grid::-webkit-scrollbar, .p-hl-tiles::-webkit-scrollbar, .p-mat-grid::-webkit-scrollbar, .p-units::-webkit-scrollbar { display: none; }
+  .p-gal-grid > *, .p-hl-tiles > *, .p-mat-grid > *, .p-units > * { scroll-snap-align: start; flex: 0 0 auto; }
+
+  .p-gal-grid { border: 0; }
+  .p-gal-grid > .p-gal { width: min(78vw, 340px); height: min(64vw, 280px); }
+  .p-gal-grid > .p-gal.p-gal-wide { width: min(88vw, 400px); }
+
+  .p-hl-tiles { border-top: 0; }
+  .p-hl-tiles > .p-hl-tile { width: min(76vw, 330px); min-height: 0; border: 1px solid var(--line); }
+
+  .p-mat-grid { border-top: 0; }
+  .p-mat-grid > .p-mat { width: min(68vw, 300px); min-height: 200px; border: 1px solid var(--line); }
+
+  .p-units > .p-unit { width: min(86vw, 380px); }
+
+}
 
 </style>
 <style id="vc-blacker">
@@ -1517,6 +1616,96 @@ body.nav-open .mobile-menu { transform: none; visibility: visible; }
   </div>
 </section>
 
+<!-- ============================ FREIRAUM / GESTALTUNG ============================ -->
+<section class="p-freiraum section-lg section-deep" id="gestaltung">
+  <div class="container">
+    <header class="p-fr-head" data-reveal>
+      <span class="eyebrow on-dark eyebrow-dot">Gestaltungsspielraum</span>
+      <h2 class="display-3" style="margin-top: 18px; color:var(--court-offwhite);">Ein Dach, <span class="serif-italic">drei Lebensentwürfe.</span></h2>
+      <p class="p-fr-lede">558 m² über vier Ebenen, ein Kaufpreis jenseits der zehn Millionen: In dieser Klasse kaufen Sie keine Wohnung, Sie kaufen Spielraum. Als Ganzes oder als zwei eigenständige Residenzen erhältlich, legt das V.IEW Penthouse nicht fest, wie Sie leben. Es hält die Möglichkeiten offen.</p>
+    </header>
+
+    <div class="p-fr-body">
+    <div class="p-fr-list" data-reveal-children>
+      <article class="p-fr-row">
+        <span class="p-fr-num">01</span>
+        <div>
+          <h3>Die Villa über der Stadt</h3>
+          <p>Die ungeteilte Villa: vier Ebenen mit Pool, Spa und Dachterrasse, für Empfänge unter freiem Himmel wie für stille Sonntage über Wien. Das Apartment im Erdgeschoss übernimmt, was eine Villa sonst ins Souterrain legt: Personal, Concierge oder Gäste.</p>
+        </div>
+        <span class="p-fr-tag">Gesamt · 558 m² + EG-Apartment</span>
+      </article>
+      <article class="p-fr-row">
+        <span class="p-fr-num">02</span>
+        <div>
+          <h3>Das Generationenhaus</h3>
+          <p>Geteilt in zwei vollwertige Residenzen, jede eigenständig erschlossen: die Familie auf zwei Etagenwelten, Eltern oder erwachsene Kinder in der eigenen Einheit, internationale Gäste im eigenen Reich. Vermögen, das zusammenbleibt. Privatsphäre, die bleibt.</p>
+        </div>
+        <span class="p-fr-tag">Top 1/18 + Top 1/19</span>
+      </article>
+      <article class="p-fr-row">
+        <span class="p-fr-num">03</span>
+        <div>
+          <h3>Residenz &amp; Wertanlage</h3>
+          <p>Eine Residenz bewohnen, die zweite als Anlage in einer Lage, die nicht nachwächst: Wohnungseigentum über den Dächern des 5. Bezirks, am Naschmarkt. Dazu die Orangerie mit eigenem Stiegenhaus, als Atelier, Studio oder Gästehaus für Geschäftspartner.</p>
+        </div>
+        <span class="p-fr-tag">Orangerie ca. 53 m²</span>
+      </article>
+    </div>
+
+    <div class="p-fr-visual" data-fr-visual data-state="1" data-reveal>
+      <svg class="p-fr-svg" viewBox="0 0 260 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schema: ein Penthouse als Ganzes oder geteilt in zwei Residenzen">
+        <defs>
+          <pattern id="frveg" width="6" height="6" patternUnits="userSpaceOnUse">
+            <circle cx="3" cy="3" r="1.3" fill="#AAB39D" opacity="0.7"/>
+          </pattern>
+        </defs>
+        <!-- Gruenderzeit-Sockel -->
+        <g opacity="0.35">
+          <rect x="70" y="238" width="120" height="72" fill="none" stroke="#F7F4EC" stroke-opacity="0.5"/>
+          <g stroke="#F7F4EC" stroke-opacity="0.3" fill="none">
+            <rect x="82" y="250" width="12" height="16"/><rect x="102" y="250" width="12" height="16"/><rect x="122" y="250" width="12" height="16"/><rect x="142" y="250" width="12" height="16"/><rect x="162" y="250" width="12" height="16"/>
+            <rect x="82" y="278" width="12" height="16"/><rect x="102" y="278" width="12" height="16"/><rect x="122" y="278" width="12" height="16"/><rect x="142" y="278" width="12" height="16"/><rect x="162" y="278" width="12" height="16"/>
+          </g>
+        </g>
+        <line x1="46" y1="310" x2="214" y2="310" stroke="#F7F4EC" stroke-opacity="0.35"/>
+        <!-- obere Residenz: Terrasse, Master, Wellness -->
+        <g class="fr-upper">
+          <rect class="fr-fill" x="70" y="70" width="120" height="22" stroke="#F7F4EC" stroke-opacity="0.6"/>
+          <rect x="70" y="84" width="120" height="8" fill="url(#frveg)"/>
+          <ellipse cx="168" cy="80" rx="12" ry="5.5" fill="#5E8BA6" opacity="0.55"/>
+          <rect class="fr-fill" x="70" y="92" width="120" height="42" stroke="#F7F4EC" stroke-opacity="0.75"/>
+          <rect class="fr-fill" x="70" y="134" width="120" height="42" stroke="#F7F4EC" stroke-opacity="0.75"/>
+          <text class="fr-lbl" x="198" y="126">1/19</text>
+        </g>
+        <!-- untere Residenz: Wohnen, Garten, Pool -->
+        <g class="fr-lower">
+          <rect class="fr-fill" x="70" y="176" width="120" height="62" stroke="#F7F4EC" stroke-opacity="0.75"/>
+          <rect x="22" y="196" width="46" height="42" fill="url(#frveg)" opacity="0.45" stroke="#F7F4EC" stroke-opacity="0.3"/>
+          <rect x="28" y="210" width="34" height="11" rx="2" fill="#5E8BA6" opacity="0.65"/>
+          <text class="fr-lbl" x="198" y="210">1/18</text>
+        </g>
+        <!-- Orangerie -->
+        <g class="fr-orangerie">
+          <rect class="fr-fill" x="22" y="246" width="46" height="24" stroke="#F7F4EC" stroke-opacity="0.55"/>
+        </g>
+        <line class="fr-divider" x1="62" y1="176" x2="198" y2="176"/>
+      </svg>
+      <div class="p-fr-caps" aria-hidden="true">
+        <span data-fr-cap>Ein Zuhause · vier Ebenen</span>
+        <span data-fr-cap>Zwei Residenzen · Top 1/18 + 1/19</span>
+        <span data-fr-cap>Eine bewohnen, eine als Anlage</span>
+      </div>
+    </div>
+    </div>
+
+    <div class="p-fr-cta" data-reveal>
+      <a class="btn btn-primary" href="#wohnungen" style="background:var(--court-offwhite); color:var(--court-green)">Einheiten vergleichen <span class="arrow">→</span></a>
+      <span class="meta">Wie Sie wohnen, entscheiden Sie. Flächen, Aufteilung und Preise: direkt darunter im Wohnungsfinder.</span>
+    </div>
+  </div>
+</section>
+
 <!-- ============================ FINDER ============================ -->
 <section class="p-finder section-lg" id="wohnungen">
   <div class="container">
@@ -1657,7 +1846,7 @@ body.nav-open .mobile-menu { transform: none; visibility: visible; }
     <div><h4>Anfrage</h4><ul><li><a href="#anfrage">Exposé</a></li><li><a href="#anfrage">Besichtigung</a></li><li><a href="tel:+436769310150">+43 676 9 310 150</a></li><li><a href="mailto:contact@v-iew.at">contact@v-iew.at</a></li></ul></div>
     <div><h4>Rechtliches</h4><ul><li><a href="#">Impressum</a></li><li><a href="#">Datenschutz</a></li><li><a href="#">Exposé-Hinweis</a></li></ul></div>
   </div>
-  <div class="ft-bottom"><span>A V.District Address · Rechte Wienzeile 73</span><span>© V.IEW 2025</span></div>
+  <div class="ft-bottom"><span>A V.District Address<span class="ft-sep"> · </span>Rechte Wienzeile 73</span><span>© V.IEW 2025</span></div>
   <div class="ft-mega" aria-hidden="true">V.IEW</div>
 </footer>
 
@@ -1984,6 +2173,41 @@ body.nav-open .mobile-menu { transform: none; visibility: visible; }
     }, { passive: true });
     setActive(0);
   });
+})();
+</script>
+<script>
+// Freiraum-Schema: zykliert subtil durch die drei Lebensentwuerfe, Zeilen synchronisieren sich
+(function () {
+  var vis = document.querySelector('[data-fr-visual]');
+  if (!vis) return;
+  var rows = [].slice.call(document.querySelectorAll('.p-fr-row'));
+  var caps = [].slice.call(vis.querySelectorAll('[data-fr-cap]'));
+  var idx = 0, timer = null, holdUntil = 0;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function set(i) {
+    idx = i;
+    vis.setAttribute('data-state', String(i + 1));
+    rows.forEach(function (r, j) { r.classList.toggle('is-active', j === i); });
+    caps.forEach(function (c, j) { c.classList.toggle('is-on', j === i); });
+  }
+  rows.forEach(function (r, i) {
+    ['mouseenter', 'click'].forEach(function (ev) {
+      r.addEventListener(ev, function () { set(i); holdUntil = Date.now() + 9000; });
+    });
+  });
+  set(0);
+  if (!reduce && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && !timer) {
+          timer = setInterval(function () { if (Date.now() >= holdUntil) set((idx + 1) % rows.length); }, 4500);
+        } else if (!e.isIntersecting && timer) {
+          clearInterval(timer); timer = null;
+        }
+      });
+    }, { threshold: 0.25 });
+    io.observe(vis);
+  }
 })();
 </script>
 </body>
